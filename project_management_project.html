@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Planning Dashboard - Ivy Vakhoya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .project-overview {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .project-overview h2 {
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #ff6b9d;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b9d;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .timeline {
+            margin: 2rem 0;
+        }
+
+        .timeline h3 {
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-date {
+            background: #ff6b9d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            margin-right: 1rem;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .risk-item {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .risk-high {
+            background: #dc3545;
+        }
+
+        .risk-medium {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .risk-low {
+            background: #28a745;
+        }
+
+        .progress-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .team-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .team-member {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .member-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: #ff6b9d;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .section h3 {
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+        }
+
+        .gantt-chart {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .gantt-task {
+            width: 150px;
+            padding: 0.5rem;
+            color: #333;
+        }
+
+        .gantt-bar {
+            height: 20px;
+            background: #ff6b9d;
+            border-radius: 10px;
+            margin-left: 1rem;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-date {
+                margin-bottom: 0.5rem;
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Community Development Project</h1>
+            <p>Project Planning & Management Dashboard | University of Nairobi</p>
+            <p><strong>Project Manager:</strong> Ivy Leah Vakhoya</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Project Overview -->
+            <div class="project-overview">
+                <h2>📋 Project Overview</h2>
+                <p><strong>Project Title:</strong> Community Health Awareness Campaign in Kibera</p>
+                <p><strong>Duration:</strong> 6 months (January 2024 - June 2024)</p>
+                <p><strong>Budget:</strong> KSH 500,000</p>
+                <p><strong>Objective:</strong> To improve health awareness and access to basic healthcare information in Kibera informal settlement through community workshops, health screening, and educational materials distribution.</p>
+            </div>
+
+            <!-- Project Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">6</span>
+                    <div class="stat-label">Months Duration</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">12</span>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5,000</span>
+                    <div class="stat-label">Target Beneficiaries</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">85%</span>
+                    <div class="stat-label">Current Progress</div>
+                </div>
+            </div>
+
+            <!-- Project Timeline -->
+            <div class="timeline">
+                <h3>📅 Project Timeline</h3>
+                <div class="timeline-item">
+                    <div class="timeline-date">Jan 2024</div>
+                    <div class="timeline-content">
+                        <h4>Project Initiation & Planning</h4>
+                        <p>Stakeholder analysis, needs assessment, and project charter development</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Feb 2024</div>
+                    <div class="timeline-content">
+                        <h4>Team Formation & Training</h4>
+                        <p>Recruitment of community volunteers and health education training</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Mar-May 2024</div>
+                    <div class="timeline-content">
+                        <h4>Implementation Phase</h4>
+                        <p>Community workshops, health screenings, and educational material distribution</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Jun 2024</div>
+                    <div class="timeline-content">
+                        <h4>Evaluation & Closure</h4>
+                        <p>Impact assessment, documentation, and project handover to community leaders</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracking -->
+            <div class="progress-section">
+                <h3>📊 Project Progress</h3>
+                <div>
+                    <strong>Planning Phase</strong>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <small>100% Complete</small>
+                </div>
+                <div>
+                    <strong>Implementation Phase</strong>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <small>85% Complete</small>
+                </div>
+                <div>
+                    <strong>Monitoring & Evaluation</strong>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <small>60% Complete</small>
+                </div>
+            </div>
+
+            <!-- Risk Management -->
+            <div class="section">
+                <h3>⚠️ Risk Assessment Matrix</h3>
+                <div class="risk-matrix">
+                    <div class="risk-item risk-high">
+                        <div>HIGH RISK</div>
+                        <small>Weather disruptions</small>
+                    </div>
+                    <div class="risk-item risk-medium">
+                        <div>MEDIUM RISK</div>
+                        <small>Budget constraints</small>
+                    </div>
+                    <div class="risk-item risk-low">
+                        <div>LOW RISK</div>
+                        <small>Team availability</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Structure -->
+            <div class="section">
+                <h3>👥 Project Team</h3>
+                <div class="team-section">
+                    <div class="team-member">
+                        <div class="member-avatar">IV</div>
+                        <div class="member-name">Ivy Vakhoya</div>
+                        <div class="member-role">Project Manager</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">JM</div>
+                        <div class="member-name">John Mwangi</div>
+                        <div class="member-role">Community Liaison</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">SK</div>
+                        <div class="member-name">Sarah Kinyua</div>
+                        <div class="member-role">Health Coordinator</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">DW</div>
+                        <div class="member-name">David Wanjiku</div>
+                        <div class="member-role">Data Analyst</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gantt Chart -->
+            <div class="section">
+                <h3>📈 Project Schedule (Gantt Chart)</h3>
+                <div class="gantt-chart">
+                    <div class="gantt-row">
+                        <div class="gantt-task">Needs Assessment</div>
+                        <div class="gantt-bar" style="width: 60px;"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-task">Team Training</div>
+                        <div class="gantt-bar" style="width: 80px; margin-left: 70px;"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-task">Community Workshops</div>
+                        <div class="gantt-bar" style="width: 150px; margin-left: 160px;"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-task">Health Screenings</div>
+                        <div class="gantt-bar" style="width: 120px; margin-left: 180px;"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-task">Final Evaluation</div>
+                        <div class="gantt-bar" style="width: 80px; margin-left: 320px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Achievements -->
+            <div class="section">
+                <h3>🏆 Key Achievements</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;">✅ Successfully trained 25 community health volunteers</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Conducted 15 community workshops reaching 1,200 residents</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Distributed 3,000 educational brochures in Swahili and English</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Established partnership with Kibera Community Health Center</li>
+                    <li style="margin-bottom: 0.5rem;">✅ Maintained project within 95% of allocated budget</li>
+                </ul>
+            </div>
+
+            <!-- Learning Outcomes -->
+            <div class="section">
+                <h3>🎓 Learning Outcomes & Skills Developed</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div>
+                        <h4 style="color: #ff6b9d; margin-bottom: 0.5rem;">Project Management</h4>
+                        <ul style="font-size: 0.9rem; color: #666;">
+                            <li>Stakeholder analysis and management</li>
+                            <li>Resource planning and allocation</li>
+                            <li>Timeline development and monitoring</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #ff6b9d; margin-bottom: 0.5rem;">Risk Management</h4>
+                        <ul style="font-size: 0.9rem; color: #666;">
+                            <li>Risk identification and assessment</li>
+                            <li>Mitigation strategy development</li>
+                            <li>Contingency planning</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #ff6b9d; margin-bottom: 0.5rem;">Leadership</h4>
+                        <ul style="font-size: 0.9rem; color: #666;">
+                            <li>Team coordination and motivation</li>
+                            <li>Communication with stakeholders</li>
+                            <li>Decision-making under pressure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Project Management Portfolio | Ivy Leah Vakhoya | University of Nairobi</p>
+            <p>Project Management and Planning Program | 2024</p>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bars
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+
+            // Add hover effects to team members
+            const teamMembers = document.querySelectorAll('.team-member');
+            teamMembers.forEach(member => {
+                member.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                member.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click functionality to timeline items
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.background = '#fff5f8';
+                    setTimeout(() => {
+                        this.style.background = 'white';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
